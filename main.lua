@@ -1,6 +1,8 @@
 local push = require 'push'
 Class = require 'class'
 
+require 'Player'
+
 WINDOW_WIDTH=1280
 WINDOW_HEIGHT=720
 
@@ -8,6 +10,7 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 GROUND_LEVEL = VIRTUAL_HEIGHT - 10
+GROUND_FRICTION = 0.20
 
 MAX_SPEED_X = 3
 
@@ -15,6 +18,8 @@ SOUND = true
 
 SOUNDS = {
 }
+
+local player = Player(0, 0, 10, 10)
 
 local playerX = VIRTUAL_WIDTH / 2
 local playerY = GROUND_LEVEL - 10
@@ -57,41 +62,7 @@ function PlaySound(key)
 end
 
 function love.update(dt)
-  local playerImpulsed = false
-
-  if love.keyboard.isDown('a') or love.keyboard.isDown('h') then
-    if math.abs(playerSpeedX) < MAX_SPEED_X then
-      playerSpeedX = playerSpeedX - playerAccelX
-    end
-    playerImpulsed = true
-  elseif love.keyboard.isDown('d') or love.keyboard.isDown('l') then
-    if math.abs(playerSpeedX) < MAX_SPEED_X then
-      playerSpeedX = playerSpeedX + playerAccelX
-      playerImpulsed = true
-    end
-  end
-
-  -- If user is not moving the player apply friction so players slowly decelerates
-  if playerImpulsed == false then
-    if playerSpeedX > 0 then
-      playerSpeedX = playerSpeedX - groundFriction
-    elseif  playerSpeedX < 0 then
-      playerSpeedX = playerSpeedX + groundFriction
-    end
-
-    if math.abs(playerSpeedX) < groundFriction then
-      playerSpeedX = 0
-    end
-  end
-
-  playerX = playerX + playerSpeedX
-
-  -- check screen boundaries
-  playerX = math.max(0, playerX)
-  playerX = math.min(VIRTUAL_WIDTH-10, playerX)
-  if math.abs(playerSpeedX) > 0 and (playerX == 0 or playerX == VIRTUAL_WIDTH - 10) then
-    playerSpeedX = 0
-  end
+  player:update(dt)
 end
 
 function love.draw()
@@ -104,8 +75,7 @@ function love.draw()
   -- draw background
   love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
-  -- draw player
-  love.graphics.rectangle("fill", playerX, playerY, 10, 10)
+  player:render()
 
   push:finish()
 end
