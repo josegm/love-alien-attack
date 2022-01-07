@@ -11,8 +11,8 @@ VIRTUAL_HEIGHT = 243
 
 GROUND_LEVEL = VIRTUAL_HEIGHT - 10
 GROUND_FRICTION = 0.20
+GRAVITY = 0.40
 
-MAX_SPEED_X = 3
 
 SOUND = true
 
@@ -20,12 +20,6 @@ SOUNDS = {
 }
 
 local player = Player(0, 0, 10, 10)
-
-local playerX = VIRTUAL_WIDTH / 2
-local playerY = GROUND_LEVEL - 10
-local playerSpeedX = 0.0
-local playerAccelX = 0.2
-local groundFriction = 0.20
 
 local showFPS= true
 
@@ -84,4 +78,6 @@ function love.keypressed(key)
   if key == "escape" then
     love.event.quit();
   end
+
+  player:keypressed(key)
 end
