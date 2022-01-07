@@ -13,21 +13,21 @@ moving, they crawl. Player is faster so he can avoid them by jumping over them.
 Sprites for the player and aliens will be crude at the beginning, we can
 improve them once the game is playable.
 
-- Draw the ground
-- Draw the player (simple)
-- Make the player move (left and right)
-- Draw an alien
-- Make an alien fall from the sky
-- Make several aliens fall from the sky randomly
-- If an alien touches the player, player is killed (implement)
-- Make the player jump
-- When an alien reaches the ground, the alien crawls to the player
-- Make player1 able to fire up (bullet system will probably be the hardest part
+- [X] Draw the ground
+- [X] Draw the player (simple)
+- [X] Make the player move (left and right)
+- [ ] Draw an alien
+- [ ] Make an alien fall from the sky
+- [ ] Make several aliens fall from the sky randomly
+- [ ] If an alien touches the player, player is killed (implement)
+- [ ] Make the player jump
+- [ ] When an alien reaches the ground, the alien crawls to the player
+- [ ] Make player1 able to fire up (bullet system will probably be the hardest part
   to implement)
-- Make player1 able to horizontally
-- Make aliens die if hit by a bullet
-- Score
-- Lives
+- [ ] Make player1 able to horizontally
+- [ ] Make aliens die if hit by a bullet
+- [ ] Score
+- [ ] Lives
 
 Other:
 
