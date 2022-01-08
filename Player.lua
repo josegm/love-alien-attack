@@ -73,16 +73,16 @@ function Player:update(dt)
   local horizontal_impulse = false
 
   if love.keyboard.isDown(KEYS.LEFT) then
-    self.looking = DIRECTIONS.LEFT
     if math.abs(self.speed_x) < MAX_SPEED_X then
       self.speed_x = self.speed_x - self.delta_x
     end
+    self.looking = DIRECTIONS.LEFT
     horizontal_impulse = true
   elseif love.keyboard.isDown(KEYS.RIGHT) then
-    self.looking = DIRECTIONS.RIGHT
     if math.abs(self.speed_x) < MAX_SPEED_X then
       self.speed_x = self.speed_x + self.delta_x
       horizontal_impulse = true
+    self.looking = DIRECTIONS.RIGHT
     end
   end
 

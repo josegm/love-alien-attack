@@ -12,9 +12,8 @@ VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
 GROUND_LEVEL = VIRTUAL_HEIGHT - 47
-GROUND_FRICTION = 0.20
+GROUND_FRICTION = 0.40
 GRAVITY = 0.40
-
 
 SOUND = true
 
@@ -101,7 +100,7 @@ function love.draw()
 
   displayFPS()
 
-  -- draw background
+  -- draw ground line
 --  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
   health:render()

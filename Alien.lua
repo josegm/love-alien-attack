@@ -17,17 +17,16 @@ function Alien:init()
 end
 
 function Alien:reset()
-  -- self.width = math.random(3, 10)
-  -- self.height = math.random(4, 10)
   self.width = 16
   self.height = 16
   self.x = math.random(0, VIRTUAL_WIDTH - self.width)
   self.y = (0 - self.height) - math.random(0, 150)
-  self.speed_x = math.random(-80, 90)
+  self.speed_x = math.random(-90, 90)
+  if self.speed_x == 0 then self.speed_x = 100 end
   if math.abs(self.speed_x) < 15 then
     self.speed_x = self.speed_x * 4
   end
-  self.speed_y = math.random(8, 50)
+  self.speed_y = math.random(8, 90)
   self.alive = true
   self.looking = DIRECTIONS.DOWN
 end
@@ -57,8 +56,13 @@ function Alien:update(dt)
 end
 
 function Alien:render()
-  love.graphics.setColor(1, 1, 1, 1)
---  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  if self.looking == DIRECTIONS.DOWN and math.abs(self.speed_y) > 70 then
+    love.graphics.setColor(1, 0, 0, 1)
+  elseif (self.looking == DIRECTIONS.LEFT or self.looking == DIRECTIONS.RIGHT) and math.abs(self.speed_x) > 70 then
+    love.graphics.setColor(1, 0, 0, 1)
+  else
+    love.graphics.setColor(1, 1, 1, 1)
+  end
   love.graphics.draw(SPRITES[self.looking], self.x, self.y)
 end
 
