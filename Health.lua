@@ -11,14 +11,18 @@ function Health:reset()
   self.x = VIRTUAL_WIDTH - self.width - margin
   self.y = margin
   self.energy = 100
+  self.recover_speed = 1
 end
 
 function Health:hit()
-  self.energy = self.energy - 20
+  self.energy = self.energy - 10
   return self.energy
 end
 
 function Health:update(dt)
+  if self.energy < 100 then
+    self.energy = self.energy + self.recover_speed * dt
+  end
 end
 
 function Health:render()

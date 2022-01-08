@@ -16,13 +16,27 @@ KEYS = {
   UP = UP_KEYS
 }
 
-function Player:init()
+local SPRITES = {
+  FRONT = love.graphics.newImage("sprites/player_front.png"),
+  LEFT = love.graphics.newImage("sprites/player_left.png"),
+  RIGHT = love.graphics.newImage("sprites/player_right.png"),
+  UP = love.graphics.newImage("sprites/player_up.png")
+}
+
+local DIRECTIONS = {
+  FRONT = 'FRONT',
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+  UP = 'UP'
+}
+
+function Player:init(sprite)
   self:reset()
 end
 
 function Player:reset()
-  self.width = 10
-  self.height = 10
+  self.width = 16
+  self.height = 16
   self.x = (VIRTUAL_WIDTH / 2) - (self.width / 2)
   self.y = GROUND_LEVEL - self.height
   self.speed_x = 0.0
@@ -31,6 +45,8 @@ function Player:reset()
   self.delta_y = 4
   self.hit = false
   self.hit_timer = 0
+
+  self.looking = DIRECTIONS.FRONT
 end
 
 function Player:check_hit(dt, alien)
@@ -57,11 +73,13 @@ function Player:update(dt)
   local horizontal_impulse = false
 
   if love.keyboard.isDown(KEYS.LEFT) then
+    self.looking = DIRECTIONS.LEFT
     if math.abs(self.speed_x) < MAX_SPEED_X then
       self.speed_x = self.speed_x - self.delta_x
     end
     horizontal_impulse = true
   elseif love.keyboard.isDown(KEYS.RIGHT) then
+    self.looking = DIRECTIONS.RIGHT
     if math.abs(self.speed_x) < MAX_SPEED_X then
       self.speed_x = self.speed_x + self.delta_x
       horizontal_impulse = true
@@ -78,6 +96,7 @@ function Player:update(dt)
 
     if math.abs(self.speed_x) < GROUND_FRICTION then
       self.speed_x = 0
+      self.looking = DIRECTIONS.FRONT
     end
   end
 
@@ -102,7 +121,6 @@ function Player:update(dt)
   end
 
   -- check ceiling
-
   if self.y < GROUND_LEVEL - MAX_JUMP then
     self.y = GROUND_LEVEL - MAX_JUMP
     self.speed_y = -GRAVITY
@@ -115,12 +133,13 @@ function Player:render()
   else
     love.graphics.setColor(1, 1, 1, 1)
   end
-  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  love.graphics.draw(SPRITES[self.looking], self.x, self.y)
 end
 
 function Player:keypressed(key)
   local up_pressed = Has_value(KEYS.UP, key)
   if up_pressed then
+    self.looking = DIRECTIONS.UP
     if math.abs(self.speed_y) < MAX_SPEED_Y then
       self.speed_y = self.speed_y + self.delta_y
     end

@@ -21,7 +21,7 @@ SOUND = true
 SOUNDS = {
 }
 
-local player = Player()
+local player = nil
 local health = Health()
 
 local aliens = {}
@@ -53,6 +53,7 @@ function love.load()
     resizable = false,
     vsync = true
   })
+  player = Player()
 
   table.insert(aliens, Alien())
   table.insert(aliens, Alien())
@@ -75,12 +76,12 @@ end
 
 function love.update(dt)
   player:update(dt)
+  health:update(dt)
 
   -- TODO: this should be in a game class
   for pos, alien in ipairs(aliens) do
     alien:update(dt)
     if alien.alive == false then
-      print(pos)
       table.remove(aliens, pos)
       table.insert(aliens, Alien())
     end
