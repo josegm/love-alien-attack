@@ -1,6 +1,7 @@
 local push = require 'push'
 Class = require 'class'
 
+require 'Health'
 require 'Player'
 require 'Alien'
 
@@ -10,7 +11,7 @@ WINDOW_HEIGHT=720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
-GROUND_LEVEL = VIRTUAL_HEIGHT - 10
+GROUND_LEVEL = VIRTUAL_HEIGHT - 47
 GROUND_FRICTION = 0.20
 GRAVITY = 0.40
 
@@ -21,6 +22,7 @@ SOUNDS = {
 }
 
 local player = Player()
+local health = Health()
 
 local aliens = {}
 
@@ -44,6 +46,7 @@ function love.load()
 
   ScoreFont = love.graphics.newFont('fonts/font.ttf', 32)
   SmallFont = love.graphics.newFont('fonts/font.ttf', 8)
+  Background = love.graphics.newImage("sprites/backg.png")
 
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
     fullscreen = false,
@@ -73,6 +76,7 @@ end
 function love.update(dt)
   player:update(dt)
 
+  -- TODO: this should be in a game class
   for pos, alien in ipairs(aliens) do
     alien:update(dt)
     if alien.alive == false then
@@ -80,7 +84,11 @@ function love.update(dt)
       table.remove(aliens, pos)
       table.insert(aliens, Alien())
     end
-    player:check_hit(dt, alien)
+    if player:check_hit(dt, alien) then
+      if health:hit() <= 0 then
+        love.event.quit()
+      end
+    end
   end
 end
 
@@ -88,12 +96,14 @@ function love.draw()
   push:start()
 
   love.graphics.clear(40/255, 45/255, 52/255, 255/255)
+  love.graphics.draw(Background)
 
   displayFPS()
 
   -- draw background
-  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
+--  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
+  health:render()
   player:render()
   for _, alien in ipairs(aliens) do
     alien:render()

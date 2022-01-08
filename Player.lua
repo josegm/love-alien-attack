@@ -36,19 +36,21 @@ end
 function Player:check_hit(dt, alien)
   if self.hit_timer > 0 and self.hit_timer < 1 then
     self.hit_timer = self.hit_timer + dt
-    return
+    return false
   end
 
   if self.hit_timer >= 1 then
     self.hit = false
     self.hit_timer = 0
-    return
+    return false
   end
 
   self.hit = Overlaps(self, alien)
   if self.hit then
     self.hit_timer = 0.1
+    return true
   end
+  return false
 end
 
 function Player:update(dt)
