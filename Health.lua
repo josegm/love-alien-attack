@@ -15,7 +15,7 @@ function Health:reset()
 end
 
 function Health:hit()
-  self.energy = self.energy - 10
+  self.energy = self.energy - 5
   return self.energy
 end
 

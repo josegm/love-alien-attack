@@ -19,9 +19,6 @@ GRAVITY = 0.40
 
 SOUND = true
 
-SOUNDS = {
-}
-
 local game = GameState()
 
 local aliens = {}
@@ -74,6 +71,7 @@ end
 
 function Playsound(key)
   if SOUND == true then
+    love.audio.stop(key)
     love.audio.play(key)
   end
 end

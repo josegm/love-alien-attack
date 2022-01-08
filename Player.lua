@@ -30,6 +30,13 @@ local DIRECTIONS = {
   UP = 'UP'
 }
 
+local SOUNDS = {
+  ['shock'] = love.audio.newSource('sounds/electric_shock.mp3', 'static'),
+  ['jump_land'] = love.audio.newSource('sounds/jump_land.mp3', 'static'),
+  ['jump'] = love.audio.newSource('sounds/jump.mp3', 'static'),
+}
+
+
 function Player:init(sprite)
   self:reset()
 end
@@ -45,6 +52,7 @@ function Player:reset()
   self.delta_y = 4
   self.hit = false
   self.hit_timer = 0
+  self.landed = true
 
   self.looking = DIRECTIONS.FRONT
 end
@@ -66,6 +74,8 @@ function Player:check_hit(dt, alien)
     self.hit_timer = 0.1
     return true
   end
+
+  Playsound(SOUNDS.shock)
   return false
 end
 
@@ -97,11 +107,17 @@ function Player:update(dt)
     if math.abs(self.speed_x) < GROUND_FRICTION then
       self.speed_x = 0
       self.looking = DIRECTIONS.FRONT
+    else
+--      Playsound(SOUNDS.walk)
     end
   end
 
   if self.y < GROUND_LEVEL - self.height then
     self.speed_y = (self.speed_y - GRAVITY)
+  end
+
+  if self.speed_y > 0 then
+    self.landed = false
   end
 
   self.x = self.x + self.speed_x
@@ -118,6 +134,10 @@ function Player:update(dt)
   if self.y >= (GROUND_LEVEL - self.height) then
     self.y = GROUND_LEVEL - self.height
     self.speed_y = 0
+    if not self.landed then
+      Playsound(SOUNDS.jump_land)
+      self.landed = true
+    end
   end
 
   -- check ceiling
@@ -143,6 +163,7 @@ function Player:keypressed(key)
     if math.abs(self.speed_y) < MAX_SPEED_Y then
       self.speed_y = self.speed_y + self.delta_y
     end
+    Playsound(SOUNDS.jump)
   end
 end
 
