@@ -40,6 +40,7 @@ function PlayState:update(dt)
     if alien.alive == false then
       table.remove(self.game.aliens, pos)
       table.insert(self.game.aliens, Alien())
+      self.game.score:count()
     end
     if self.game.player:check_hit(dt, alien) then
       if self.game.health:hit() <= 0 then
@@ -61,6 +62,7 @@ function PlayState:draw()
   --  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
   self.game.health:render()
+  self.game.score:render()
   self.game.player:render()
   for _, alien in ipairs(self.game.aliens) do
     alien:render()

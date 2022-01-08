@@ -1,6 +1,7 @@
 require 'Player'
 require 'Alien'
 require 'Health'
+require 'Score'
 
 require 'states.PlayState'
 require 'states.SplashState'
@@ -11,6 +12,7 @@ GameState = Class{}
 function GameState:init()
   self.player = Player()
   self.health = Health()
+  self.score = Score()
   self.aliens = {}
   self.state = SplashState(self)
 end
@@ -22,6 +24,7 @@ end
 function GameState:reset()
   self.player:reset()
   self.health:reset()
+  self.score:reset()
   self.aliens = {}
 end
 

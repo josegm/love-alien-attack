@@ -3,10 +3,6 @@ Class = require 'class'
 
 require 'states.GameState'
 
-require 'Health'
-require 'Player'
-require 'Alien'
-
 WINDOW_WIDTH=1280
 WINDOW_HEIGHT=720
 
@@ -52,25 +48,10 @@ function love.load()
     resizable = false,
     vsync = true
   })
-  player = Player()
-
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-  table.insert(aliens, Alien())
-
-  main_timer = love.timer.getTime()
 end
 
 function Playsound(key)
-  if SOUND == true then
+  if SOUND then
     love.audio.stop(key)
     love.audio.play(key)
   end
