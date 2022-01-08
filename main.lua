@@ -20,8 +20,7 @@ SOUND = true
 SOUNDS = {
 }
 
-local player = Player(0, 0, 10, 10)
--- local alien = Alien(0, 0, 10, 10)
+local player = Player()
 
 local aliens = {}
 
@@ -65,7 +64,7 @@ function love.load()
   table.insert(aliens, Alien())
 end
 
-function PlaySound(key)
+function Playsound(key)
   if SOUND == true then
     love.audio.play(key)
   end
@@ -75,7 +74,9 @@ function love.update(dt)
   player:update(dt)
   for _, alien in ipairs(aliens) do
     alien:update(dt)
+    player.bittenBy(alien)
   end
+
 end
 
 function love.draw()
