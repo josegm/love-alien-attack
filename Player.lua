@@ -36,10 +36,6 @@ function Player:reset()
   self.deltaY = 4
 end
 
-function Player:render()
-  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
-end
-
 function Player:update(dt)
   local horizontalImpulse = false
 
@@ -94,6 +90,10 @@ function Player:update(dt)
     self.y = GROUND_LEVEL - MAX_JUMP
     self.speedY = -GRAVITY
   end
+end
+
+function Player:render()
+  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
 end
 
 function Player:keypressed(key)

@@ -2,6 +2,7 @@ local push = require 'push'
 Class = require 'class'
 
 require 'Player'
+require 'Alien'
 
 WINDOW_WIDTH=1280
 WINDOW_HEIGHT=720
@@ -20,6 +21,7 @@ SOUNDS = {
 }
 
 local player = Player(0, 0, 10, 10)
+local alien = Alien(0, 0, 10, 10)
 
 local showFPS= true
 
@@ -57,6 +59,7 @@ end
 
 function love.update(dt)
   player:update(dt)
+  alien:update(dt)
 end
 
 function love.draw()
@@ -70,6 +73,7 @@ function love.draw()
   love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
   player:render()
+  alien:render()
 
   push:finish()
 end
