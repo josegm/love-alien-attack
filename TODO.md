@@ -18,7 +18,7 @@ improve them once the game is playable.
 - [X] Make the player move (left and right)
 - [X] Draw an alien
 - [X] Make an alien fall from the sky
-- [ ] Make several aliens fall from the sky randomly
+- [X] Make several aliens fall from the sky randomly
 - [ ] If an alien touches the player, player is killed (implement)
 - [ ] Make the player jump
 - [ ] When an alien reaches the ground, the alien crawls to the player

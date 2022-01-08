@@ -1,22 +1,24 @@
 Alien = Class {}
 
-function Alien:init(posX, posY, width, height)
-  self.x = posX
-  self.y = posY
-  self.width = width
-  self.height = height
-
-  self.speedX = 0.0
-  self.speedY = 0.0
-
+function Alien:init()
+  -- self.width = math.random(3, 10)
+  -- self.height = math.random(4, 10)
+  -- self.x = math.random(0, VIRTUAL_WIDTH - self.width)
+  -- self.y = (0 - self.height) - math.random(0, 150)
+  -- self.speedX = math.random(-20, 20)
+  -- self.speedY = math.random(8, 30)
+  --
   self:reset()
 end
 
 function Alien:reset()
+  self.width = math.random(3, 10)
+  self.height = math.random(4, 10)
   self.x = math.random(0, VIRTUAL_WIDTH - self.width)
-  self.y = 0 - self.height
+  self.y = (0 - self.height) - math.random(0, 150)
   self.speedX = math.random(-20, 20)
-  self.speedY = 30
+  self.speedY = math.random(8, 30)
+
 end
 
 function Alien:update(dt)

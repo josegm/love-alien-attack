@@ -21,7 +21,9 @@ SOUNDS = {
 }
 
 local player = Player(0, 0, 10, 10)
-local alien = Alien(0, 0, 10, 10)
+-- local alien = Alien(0, 0, 10, 10)
+
+local aliens = {}
 
 local showFPS= true
 
@@ -49,6 +51,18 @@ function love.load()
     resizable = false,
     vsync = true
   })
+
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
+  table.insert(aliens, Alien())
 end
 
 function PlaySound(key)
@@ -59,7 +73,9 @@ end
 
 function love.update(dt)
   player:update(dt)
-  alien:update(dt)
+  for _, alien in ipairs(aliens) do
+    alien:update(dt)
+  end
 end
 
 function love.draw()
@@ -73,7 +89,9 @@ function love.draw()
   love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
   player:render()
-  alien:render()
+  for _, alien in ipairs(aliens) do
+    alien:render()
+  end
 
   push:finish()
 end
