@@ -1,6 +1,8 @@
 local push = require 'push'
 Class = require 'class'
 
+require 'states.GameState'
+
 require 'Health'
 require 'Player'
 require 'Alien'
@@ -20,8 +22,7 @@ SOUND = true
 SOUNDS = {
 }
 
-local player = nil
-local health = Health()
+local game = GameState()
 
 local aliens = {}
 
@@ -78,22 +79,7 @@ function Playsound(key)
 end
 
 function love.update(dt)
-  player:update(dt)
-  health:update(dt)
-
-  -- TODO: this should be in a game class
-  for pos, alien in ipairs(aliens) do
-    alien:update(dt)
-    if alien.alive == false then
-      table.remove(aliens, pos)
-      table.insert(aliens, Alien())
-    end
-    if player:check_hit(dt, alien) then
-      if health:hit() <= 0 then
-        love.event.quit()
-      end
-    end
-  end
+  game:update(dt)
 end
 
 local function seconds_elapsed()
@@ -103,37 +89,12 @@ end
 function love.draw()
   push:start()
 
-  local elapsed = seconds_elapsed()
-
-  love.graphics.clear(40/255, 45/255, 52/255, 255/255)
-  love.graphics.draw(Background)
-
   displayFPS()
-
-  if elapsed < 5 then
-    if math.floor(elapsed) % 2 == 0 then
-      love.graphics.setColor(1, 0.3, 0.3 , 1)
-    else
-      love.graphics.setColor(1, 1, 1 , 1)
-    end
-    love.graphics.print("Aliens are comming, prepare yourself!", 20, VIRTUAL_HEIGHT - 20)
-  end
-  -- draw ground line
---  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
-
-  health:render()
-  player:render()
-  for _, alien in ipairs(aliens) do
-    alien:render()
-  end
+  game:draw()
 
   push:finish()
 end
 
 function love.keypressed(key)
-  if key == "escape" then
-    love.event.quit();
-  end
-
-  player:keypressed(key)
+  game:keypressed(key)
 end
