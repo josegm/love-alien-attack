@@ -25,6 +25,8 @@ local health = Health()
 
 local aliens = {}
 
+local main_timer = 0
+
 local showFPS= true
 
 local function displayFPS()
@@ -65,6 +67,8 @@ function love.load()
   table.insert(aliens, Alien())
   table.insert(aliens, Alien())
   table.insert(aliens, Alien())
+
+  main_timer = love.timer.getTime()
 end
 
 function Playsound(key)
@@ -92,14 +96,28 @@ function love.update(dt)
   end
 end
 
+local function seconds_elapsed()
+  return (love.timer.getTime() - main_timer)
+end
+
 function love.draw()
   push:start()
+
+  local elapsed = seconds_elapsed()
 
   love.graphics.clear(40/255, 45/255, 52/255, 255/255)
   love.graphics.draw(Background)
 
   displayFPS()
 
+  if elapsed < 5 then
+    if math.floor(elapsed) % 2 == 0 then
+      love.graphics.setColor(1, 0.3, 0.3 , 1)
+    else
+      love.graphics.setColor(1, 1, 1 , 1)
+    end
+    love.graphics.print("Aliens are comming, prepare yourself!", 20, VIRTUAL_HEIGHT - 20)
+  end
   -- draw ground line
 --  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
