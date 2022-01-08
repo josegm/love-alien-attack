@@ -72,11 +72,16 @@ end
 
 function love.update(dt)
   player:update(dt)
-  for _, alien in ipairs(aliens) do
-    alien:update(dt)
-    player.bittenBy(alien)
-  end
 
+  for pos, alien in ipairs(aliens) do
+    alien:update(dt)
+    if alien.alive == false then
+      print(pos)
+      table.remove(aliens, pos)
+      table.insert(aliens, Alien())
+    end
+    player:check_hit(dt, alien)
+  end
 end
 
 function love.draw()

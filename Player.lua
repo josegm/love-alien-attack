@@ -1,3 +1,5 @@
+require 'Utils'
+
 Player = Class {}
 
 LEFT_KEYS = { 'a', 'h', 'left' }
@@ -27,6 +29,26 @@ function Player:reset()
   self.speed_y = 0.0
   self.delta_x = 0.2
   self.delta_y = 4
+  self.hit = false
+  self.hit_timer = 0
+end
+
+function Player:check_hit(dt, alien)
+  if self.hit_timer > 0 and self.hit_timer < 1 then
+    self.hit_timer = self.hit_timer + dt
+    return
+  end
+
+  if self.hit_timer >= 1 then
+    self.hit = false
+    self.hit_timer = 0
+    return
+  end
+
+  self.hit = Overlaps(self, alien)
+  if self.hit then
+    self.hit_timer = 0.1
+  end
 end
 
 function Player:update(dt)
@@ -86,6 +108,11 @@ function Player:update(dt)
 end
 
 function Player:render()
+  if self.hit then
+    love.graphics.setColor(1, 0, 0, 1)
+  else
+    love.graphics.setColor(1, 1, 1, 1)
+  end
   love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
 end
 

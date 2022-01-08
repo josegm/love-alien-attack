@@ -19,14 +19,13 @@ improve them once the game is playable.
 - [X] Draw an alien
 - [X] Make an alien fall from the sky
 - [X] Make several aliens fall from the sky randomly
-- [ ] If an alien touches the player, player is killed (implement)
-- [ ] Make the player jump
-- [ ] When an alien reaches the ground, the alien crawls to the player
+- [X] Make the player jump
+- [X] When an alien reaches the ground, the alien crawls to the player
 - [ ] Make player1 able to fire up (bullet system will probably be the hardest part
   to implement)
-- [ ] Make player1 able to horizontally
 - [ ] Make aliens die if hit by a bullet
 - [ ] Score
+- [ ] If player is touched multiple times player is killed (implement)
 - [ ] Lives
 
 Other:
