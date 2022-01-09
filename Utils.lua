@@ -10,3 +10,12 @@ function Overlaps(b1, b2)
 
   return true
 end
+
+function Has_value(array, value)
+  for _, val in ipairs(array) do
+    if value == val then
+      return true
+    end
+  end
+  return false
+end

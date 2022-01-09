@@ -32,10 +32,7 @@ function Alien:reset()
 end
 
 function Alien:update(dt)
-  if self.alive == false then
-    print("Alien dead")
-    return
-  end
+  if not self.alive then return end
 
   if self:isAtGroundLevel() then
     self.x = self.x + self.speed_x * dt

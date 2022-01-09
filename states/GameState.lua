@@ -2,6 +2,7 @@ require 'Player'
 require 'Alien'
 require 'Health'
 require 'Score'
+require 'Bullet'
 
 require 'states.PlayState'
 require 'states.SplashState'
@@ -14,6 +15,7 @@ function GameState:init()
   self.health = Health()
   self.score = Score()
   self.aliens = {}
+  self.bullets = {}
   self.state = SplashState(self)
 end
 
@@ -26,6 +28,7 @@ function GameState:reset()
   self.health:reset()
   self.score:reset()
   self.aliens = {}
+  self.bullets = {}
 end
 
 function GameState:keypressed(key)

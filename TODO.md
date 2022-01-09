@@ -3,7 +3,7 @@
 It'll be a survival game.
 
 The player will be at the bottom of the screen. Aliens will fall down. Player
-will have to ways to fire, one button to fire UP, so it kills the aliens while
+will have to fire, one button to fire UP, so it kills the aliens while
 they're falling and another button to fire horizontally, so he can also kill
 the aliens that get to the ground. Aliens once on the ground are not very fast
 moving, they crawl. Player is faster so he can avoid them by jumping over them.
@@ -22,17 +22,16 @@ improve them once the game is playable.
 - [X] Make the player jump
 - [X] When an alien reaches the ground, the alien crawls to the player
 - [X] If player is touched multiple times player is killed (implement)
-- [ ] Make player1 able to fire up (bullet system will probably be the hardest part
+- [X] Make player1 able to fire up (bullet system will probably be the hardest part
   to implement)
-- [ ] Make aliens die if hit by a bullet
-- [ ] Score
-- [ ] Lives
+- [X] Make aliens die if hit by a bullet
+- [X] Score
 
 Other:
 
-- Splashscreen
-- Sounds
+- [X] Splashscreen
+- [X] Sounds
 - Music
-- Graphics
+- [ ] Graphics
 - Alien diversity
 - Power ups

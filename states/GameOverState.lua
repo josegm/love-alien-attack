@@ -11,7 +11,8 @@ function GameOverState:draw()
   love.graphics.setFont(ScoreFont)
   love.graphics.printf('GAME OVER', 0, (VIRTUAL_HEIGHT / 2) - VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
   love.graphics.setFont(SmallFont)
-  love.graphics.printf("Aliens conquered the Earth and ate all the people", 0, (VIRTUAL_HEIGHT / 2) + 8, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf("You fought bravely and managed to avoid " .. self.game.score.aliens_avoided .. " aliens. Unfortunately, ", 0, (VIRTUAL_HEIGHT / 2) + 8, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf("Aliens conquered the Earth and ate everybody", 0, (VIRTUAL_HEIGHT / 2) + 16, VIRTUAL_WIDTH, 'center')
 end
 
 function GameOverState:update(dt)

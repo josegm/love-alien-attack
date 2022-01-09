@@ -5,6 +5,7 @@ Player = Class {}
 LEFT_KEYS = { 'a', 'h', 'left' }
 RIGHT_KEYS = { 'd', 'l', 'right' }
 UP_KEYS = { 'w', 'k', 'up' }
+FIRE_KEYS = { 'n', 'space' }
 
 MAX_SPEED_X = 3
 MAX_SPEED_Y = 16
@@ -13,7 +14,8 @@ MAX_JUMP = 100
 KEYS = {
   LEFT = LEFT_KEYS,
   RIGHT = RIGHT_KEYS,
-  UP = UP_KEYS
+  UP = UP_KEYS,
+  FIRE = FIRE_KEYS
 }
 
 local SPRITES = {
@@ -158,6 +160,7 @@ end
 
 function Player:keypressed(key)
   local up_pressed = Has_value(KEYS.UP, key)
+
   if up_pressed then
     self.looking = DIRECTIONS.UP
     if math.abs(self.speed_y) < MAX_SPEED_Y then
@@ -165,13 +168,5 @@ function Player:keypressed(key)
     end
     Playsound(SOUNDS.jump)
   end
-end
 
-function Has_value(array, value)
-  for _, val in ipairs(array) do
-    if value == val then
-      return true
-    end
-  end
-  return false
 end
