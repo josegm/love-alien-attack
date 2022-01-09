@@ -125,6 +125,10 @@ function Player:update(dt)
   self.x = self.x + self.speed_x
   self.y = self.y - self.speed_y
 
+  self:check_boundaries()
+end
+
+function Player:check_boundaries()
   -- check horizontal boundaries
   self.x = math.max(0, self.x)
   self.x = math.min(VIRTUAL_WIDTH-10, self.x)
