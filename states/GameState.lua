@@ -3,6 +3,7 @@ require 'Alien'
 require 'Health'
 require 'Score'
 require 'Bullet'
+require 'Missile'
 
 require 'states.PlayState'
 require 'states.SplashState'
@@ -16,6 +17,7 @@ function GameState:init()
   self.score = Score()
   self.aliens = {}
   self.bullets = {}
+  self.missiles = {}
   self.state = SplashState(self)
 end
 

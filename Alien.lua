@@ -27,6 +27,15 @@ function Alien:reset()
     self.speed_x = self.speed_x * 4
   end
   self.speed_y = math.random(8, 90)
+  self.ready_to_fire = false
+  if self.speed_y < 40 then
+    self.pending_missiles = 1
+    self.fire_at_height = math.random(50, GROUND_LEVEL - 100)
+  else
+    self.pending_missiles = 0
+    self.fire_at_height = 0
+  end
+
   self.alive = true
   self.looking = DIRECTIONS.DOWN
   self.dying = 0
@@ -50,12 +59,16 @@ function Alien:update(dt)
   else
     self.y = self.y + self.speed_y * dt
     self.looking = DIRECTIONS.DOWN
+
+    if self.pending_missiles > 0 and self.fire_at_height < self.y then
+      self.ready_to_fire = true
+      print("Ready to fire")
+    end
   end
 
   if (self.x + self.width) < 0 + self.width or self.x > VIRTUAL_WIDTH then
     self.alive = false
   end
-
 end
 
 function Alien:render()

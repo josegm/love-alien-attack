@@ -5,6 +5,7 @@ DIRECTION_RIGHT = 1
 
 local SOUNDS = {
   ['bullet'] = love.audio.newSource('sounds/bullet.mp3', 'static'),
+  ['missile'] = love.audio.newSource('sounds/missile.mp3', 'static'),
   ['alien_hit'] = love.audio.newSource('sounds/alien_hit.mp3', 'static'),
 }
 
@@ -71,7 +72,25 @@ function PlayState:update(dt)
         game_over = true
       end
     end
+
+    if alien.alive and alien.ready_to_fire then
+      alien.ready_to_fire = false
+      alien.pending_missiles = alien.pending_missiles - 1
+      table.insert(self.game.missiles, Missile(alien, self.game.player))
+      Playsound(SOUNDS.missile)
+    end
   end
+
+  for pos, missile in ipairs(self.game.missiles) do
+    missile:update(dt)
+
+    if self.game.player:check_hit(dt, missile) then
+      if self.game.health:hit() <= 0 then
+        game_over = true
+      end
+    end
+  end
+
 
   -- losing condition?
   if game_over then
@@ -107,6 +126,11 @@ function PlayState:draw()
   for _, bullet in ipairs(self.game.bullets) do
     bullet:render()
   end
+
+  for _, missile in ipairs(self.game.missiles) do
+    missile:render()
+  end
+
 end
 
 function PlayState:keypressed(key)
