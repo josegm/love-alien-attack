@@ -17,20 +17,20 @@ function PlayState:init(gameState)
   table.insert(self.game.aliens, Alien())
   table.insert(self.game.aliens, Alien())
   table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
-  table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
+  -- table.insert(self.game.aliens, Alien())
 end
 
 function PlayState:update(dt)
@@ -85,12 +85,22 @@ function PlayState:draw()
   -- draw ground line
   --  love.graphics.line(0, GROUND_LEVEL, VIRTUAL_WIDTH, GROUND_LEVEL)
 
+  local shadow = function(entity)
+    local shadowLengthFactor = ((GROUND_LEVEL - entity.y) * 100 / GROUND_LEVEL) * 0.25
+    shadowLengthFactor = math.min(entity.width / 2, shadowLengthFactor)
+    love.graphics.setColor(0, 0, 0, 0.3)
+    love.graphics.line(entity.x+shadowLengthFactor, GROUND_LEVEL+8, entity.x + entity.width - shadowLengthFactor, GROUND_LEVEL+8)
+  end
+
   self.game.health:render()
   self.game.score:render()
   self.game.player:render()
+  shadow(self.game.player)
+
 
   for _, alien in ipairs(self.game.aliens) do
     alien:render()
+    shadow(alien)
   end
 
   for _, bullet in ipairs(self.game.bullets) do

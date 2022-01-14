@@ -65,7 +65,7 @@ function Player:reset()
 end
 
 function Player:check_hit(dt, alien)
-  if self.hit_timer > 0 and self.hit_timer < 1 then
+  if self.hit_timer > 0 and self.hit_timer < 0.3 then
     self.hit_timer = self.hit_timer + dt
     return false
   end
