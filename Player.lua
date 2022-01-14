@@ -11,6 +11,9 @@ MAX_SPEED_X = 2
 MAX_SPEED_Y = 16
 MAX_JUMP = 100
 
+FLOAT_RANGE = 2
+FLOAT_INTENSITY = 10
+
 KEYS = {
   LEFT = LEFT_KEYS,
   RIGHT = RIGHT_KEYS,
@@ -55,6 +58,8 @@ function Player:reset()
   self.hit = false
   self.hit_timer = 0
   self.landed = true
+  self.float_level = 0
+  self.float_intensity = FLOAT_INTENSITY
 
   self.looking = DIRECTIONS.FRONT
 end
@@ -81,8 +86,20 @@ function Player:check_hit(dt, alien)
   return false
 end
 
+function Player:update_float_level(dt)
+  if not self.landed then
+    self.float_level = FLOAT_RANGE
+  end
+
+  self.float_level = self.float_level + (self.float_intensity * dt)
+  if math.abs(self.float_level) >= FLOAT_RANGE then
+    self.float_intensity = self.float_intensity * -1
+  end
+end
+
 function Player:update(dt)
   local horizontal_impulse = false
+  self:update_float_level(dt)
 
   if love.keyboard.isDown(KEYS.LEFT) then
     if math.abs(self.speed_x) < MAX_SPEED_X then
@@ -114,7 +131,7 @@ function Player:update(dt)
     end
   end
 
-  if self.y < GROUND_LEVEL - self.height then
+  if self.y < (GROUND_LEVEL - self.height + self.float_level) then
     self.speed_y = (self.speed_y - GRAVITY)
   end
 
@@ -138,7 +155,7 @@ function Player:check_boundaries()
 
   -- check vertical boundaries
   if self.y >= (GROUND_LEVEL - self.height) then
-    self.y = GROUND_LEVEL - self.height
+    self.y = GROUND_LEVEL - self.height + self.float_level
     self.speed_y = 0
     if not self.landed then
       Playsound(SOUNDS.jump_land)
@@ -159,7 +176,11 @@ function Player:render()
   else
     love.graphics.setColor(1, 1, 1, 1)
   end
-  love.graphics.draw(SPRITES[self.looking], self.x, self.y)
+  if self.landed then
+    love.graphics.draw(SPRITES[self.looking], self.x, self.y + self.float_level)
+  else
+    love.graphics.draw(SPRITES[self.looking], self.x, self.y)
+  end
 end
 
 function Player:keypressed(key)
