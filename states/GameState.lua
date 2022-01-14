@@ -1,5 +1,6 @@
 require 'Player'
 require 'Alien'
+require 'Alien2'
 require 'Health'
 require 'Score'
 require 'Bullet'

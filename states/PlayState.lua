@@ -61,9 +61,14 @@ function PlayState:update(dt)
   -- TODO: this should be in a game class?
   for pos, alien in ipairs(self.game.aliens) do
     alien:update(dt)
+
     if not alien.alive and alien.dying < 0.2 then
       table.remove(self.game.aliens, pos)
-      table.insert(self.game.aliens, Alien())
+      if math.random(0,3) == 1 then
+        table.insert(self.game.aliens, pos, Alien2())
+      else
+        table.insert(self.game.aliens, Alien())
+      end
       self.game.score:count()
     end
 
@@ -82,6 +87,11 @@ function PlayState:update(dt)
   end
 
   for pos, missile in ipairs(self.game.missiles) do
+    if not missile.alive then
+      table.remove(self.game.missiles, pos)
+      break
+    end
+
     missile:update(dt)
 
     if self.game.player:check_hit(dt, missile) then
@@ -90,7 +100,6 @@ function PlayState:update(dt)
       end
     end
   end
-
 
   -- losing condition?
   if game_over then

@@ -62,7 +62,6 @@ function Alien:update(dt)
 
     if self.pending_missiles > 0 and self.fire_at_height < self.y then
       self.ready_to_fire = true
-      print("Ready to fire")
     end
   end
 

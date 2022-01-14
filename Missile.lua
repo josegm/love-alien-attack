@@ -17,7 +17,6 @@ function Missile:init(alien, target)
 
   self.speed_x = self.speed_x * MISSILE_SPEED
   self.speed_y = self.speed_y * MISSILE_SPEED
-  print("nx: " .. self.speed_x .. "ny: " .. self.speed_y)
 
   self:reset()
 end
@@ -29,6 +28,8 @@ function Missile:update(dt)
   if not self.alive then return end
   self.x = self.x + (self.speed_x * dt)
   self.y = self.y + (self.speed_y * dt)
+
+  if self.y > VIRTUAL_HEIGHT then self.alive = false end
 end
 
 function Missile:render()
