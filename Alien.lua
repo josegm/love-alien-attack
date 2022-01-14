@@ -29,9 +29,14 @@ function Alien:reset()
   self.speed_y = math.random(8, 90)
   self.alive = true
   self.looking = DIRECTIONS.DOWN
+  self.dying = 0
 end
 
 function Alien:update(dt)
+  if self.dying > 0 then
+    self.dying = self.dying - (4 * dt)
+  end
+
   if not self.alive then return end
 
   if self:isAtGroundLevel() then
@@ -50,9 +55,15 @@ function Alien:update(dt)
   if (self.x + self.width) < 0 + self.width or self.x > VIRTUAL_WIDTH then
     self.alive = false
   end
+
 end
 
 function Alien:render()
+  if self.dying > 0 then
+    love.graphics.setColor(1, 1, 1, self.dying)
+    love.graphics.draw(SPRITES[self.looking], self.x, self.y, 0, self.dying, self.dying, 0, 0)
+    return
+  end
   if self.looking == DIRECTIONS.DOWN and math.abs(self.speed_y) > 70 then
     love.graphics.setColor(1, 0, 0, 1)
   elseif (self.looking == DIRECTIONS.LEFT or self.looking == DIRECTIONS.RIGHT) and math.abs(self.speed_x) > 70 then

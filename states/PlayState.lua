@@ -43,7 +43,8 @@ function PlayState:update(dt)
     bullet:update(dt)
 
     for _, alien in ipairs(self.game.aliens) do
-      if Overlaps(bullet, alien) then
+      if alien.alive and Overlaps(bullet, alien) then
+        alien.dying = 1
         alien.alive = false
         bullet.alive = false
         Playsound(SOUNDS.alien_hit)
@@ -59,7 +60,7 @@ function PlayState:update(dt)
   -- TODO: this should be in a game class?
   for pos, alien in ipairs(self.game.aliens) do
     alien:update(dt)
-    if alien.alive == false then
+    if not alien.alive and alien.dying < 0.2 then
       table.remove(self.game.aliens, pos)
       table.insert(self.game.aliens, Alien())
       self.game.score:count()
