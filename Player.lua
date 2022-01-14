@@ -7,7 +7,7 @@ RIGHT_KEYS = { 'd', 'l', 'right' }
 UP_KEYS = { 'w', 'k', 'up' }
 FIRE_KEYS = { 'n', 'space' }
 
-MAX_SPEED_X = 3
+MAX_SPEED_X = 2
 MAX_SPEED_Y = 16
 MAX_JUMP = 100
 

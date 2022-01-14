@@ -102,8 +102,8 @@ function PlayState:keypressed(key)
   local fire_pressed = Has_value(KEYS.FIRE, key)
 
   if fire_pressed then
-    if #self.game.bullets < 3 then
-      table.insert(self.game.bullets, Bullet(self.game.player.x + (self.game.player.width / 2), self.game.player.y))
+    if #self.game.bullets < MAX_BULLETS then
+      table.insert(self.game.bullets, Bullet(self.game.player))
       Playsound(SOUNDS.bullet)
     end
   end
